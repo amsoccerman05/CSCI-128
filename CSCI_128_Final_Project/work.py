@@ -1,31 +1,14 @@
-import csv
-import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
-num_of_cylinders = []
-fuel_economy = []
+# Load the dataset
+data = pd.read_csv('/Users/aiden/OneDrive/Desktop/CSCI128/CSCI_128_Final_Project/Car_Information.csv')  # Replace 'path_to_your_csv_file.csv' with your file path
 
-with open('/Users/aiden/OneDrive/Desktop/CSCI128/CSCI_128_Final_Project/Car_Information.csv', 'r') as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        num_of_cylinders.append(float(row['num_of_cylinders']))
-        fuel_economy.append(float(row['fuel_economy']))
-
-num_of_cylinders = np.array(num_of_cylinders)
-fuel_economy = np.array(fuel_economy)
-
-mean_num_of_cylinders = np.mean(num_of_cylinders)
-mean_fuel_economy = np.mean(fuel_economy)
-
-numerator = np.sum((num_of_cylinders - mean_num_of_cylinders) * (fuel_economy - mean_fuel_economy))
-denominator1 = np.sum((num_of_cylinders - mean_num_of_cylinders) ** 2)
-denominator2 = np.sum((fuel_economy - mean_fuel_economy) ** 2)
-correlation = numerator / np.sqrt(denominator1 * denominator2)
-
-print(f'Correlation between Number of Cylinders and Fuel Economy: {correlation}')
-
-plt.scatter(num_of_cylinders, fuel_economy)
-plt.title('Number of Cylinders vs Fuel Economy')
+# Plotting number of cylinders against gas mileage
+plt.figure(figsize=(8, 6))
+plt.scatter(data['num-of-cylinders'], data['city-mpg'], alpha=0.7)
+plt.title('Number of Cylinders vs Gas Mileage')
 plt.xlabel('Number of Cylinders')
-plt.ylabel('Fuel Economy')
+plt.ylabel('City MPG')
+plt.grid(True)
 plt.show()
